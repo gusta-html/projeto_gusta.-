@@ -1,0 +1,42 @@
+import tkinter as tk
+from tkinter import ttk
+from tkinter import messagebox
+import qrcode as qr
+
+def gera_qrcode():
+    url= website_entry.get()
+
+    if len(url) == 0:
+        messagebox.showinfo(
+            title= "Erro!",
+            message= "Por favor, insira o URL novamente"
+        )
+    else:
+        opcao_escolhida= messagebox.askokcancel(
+            title= url,
+            message= f"Endereço é: \n"
+                     f"Endereço: {url} \n"
+                     f"Pronto para salvar"
+        )
+
+    if opcao_escolhida:
+        img = qr.make(url)
+        img.save("qr.Exporte.png")
+        messagebox.showinfo(title="Sucesso", message="QR Code salvo com sucesso!")
+
+
+
+window = tk.Tk()
+window.title("Gerador de QR Code")
+window.geometry("350x150")
+
+label = tk.Label(window, text="Insira URL:", font=("Arial", 10))
+label.pack(pady=5)
+
+website_entry = tk.Entry(window, width=40)
+website_entry.pack(pady=5)
+
+button = tk.Button(window, text="QR Code gerado", command=gera_qrcode)
+button.pack(pady=10)
+
+window.mainloop()
